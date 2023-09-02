@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import * #importando classes do django admin
+from django.contrib.auth.models import User #importando classes do django admin
 
 # Create your models here.
 class Evento(models.Model):
@@ -18,4 +18,3 @@ class Evento(models.Model):
 
     def __str__(self):
         return self.titulo
-
