@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Evento</title>
+</head>
+    <h1>Novo Evento</h1>
+<body>
+
+    <form action="submit" method="POST"> {% csrf_token %}
+        <label>Titulo</label>
+        <br>
+        <input type="text" name="titulo" size="23">
+        <br>
+        <label>Data</label>
+        <br>
+        <input type="datetime-local" name="data" size="23">
+        <br>
+        <label>Descrição</label>
+        <br>
+        <textarea name="descricao" rows="5" cols="23">Descrição</textarea>
+        <br> <br>
+        <button type="submit">Salvar</button>
+        <a href="/">
+            <button type="button">Cancelar</button>
+        </a>
+        <br>
+    </form>
+</body>
+</html>
