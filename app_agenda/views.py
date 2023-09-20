@@ -36,7 +36,13 @@ def logout_user(request):
 # criar eventos
 @login_required(login_url='/login/')
 def novo_evento(request):
-    return render(request, 'eventos.html')
+    id_evento = request.GET.get('id')
+    print(id_evento)
+    dados = {}
+    if id_evento:
+        dados['evento'] = Evento.objects.get(id=id_evento)
+        print(dados)
+    return render(request, 'eventos.html', dados)
 
 
 @login_required(login_url='/login')
@@ -44,15 +50,27 @@ def submit_evento(request):
     if request.POST:
         titulo = request.POST.get('titulo')
         data = request.POST.get('data')
-        descricao = request.POST.get('descicao')
+        descricao = request.POST.get('descricao')
         usuario = request.user
+        id_evento = request.POST.get('id_evento')
+        print(f'esse é o id: {id_evento}')
         # persistir dados no banco
-        Evento.objects.create(
-            titulo=titulo,
-            data=data,
-            descricao=descricao,
-            usuario=usuario
-        )
+        if id_evento:
+            print('Update')
+            Evento.objects.filter(id=id_evento).update(
+                titulo=titulo,
+                data=data,
+                descricao=descricao,
+                usuario=usuario
+            )
+        else:
+            print('criando')
+            Evento.objects.create(
+                titulo=titulo,
+                data=data,
+                descricao=descricao,
+                usuario=usuario
+            )
     return redirect('/')
 
 
@@ -63,5 +81,17 @@ def lista_eventos(request):
     evento = Evento.objects.filter(usuario=usuario)
     response = {'eventos': evento}
     return render(request, 'agenda.html', response)
+
+# atualizar eventos
+
+# deletar eventos
+@login_required(login_url='/login/')
+def delete_evento(request, id_evento):
+    usuario = request.user
+    evento = Evento.objects .get(id=id_evento)
+    if usuario == evento.usuario:
+        evento.delete()
+    return redirect('/')
+
 
 # @login_required(login_url='/login/')

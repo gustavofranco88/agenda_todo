@@ -14,7 +14,13 @@
     </a>
     <ul style="front-size: 18px">
         {% for evento in eventos %}
-            <li>{{evento.titulo}}, {{evento.data}}</li>
+            <li>
+                {{evento.titulo}}, {{evento.data}}
+                (
+                    <a href="novo-evento/?id={{ evento.id }}">Editar</a> --
+                    <a href="novo-evento/delete/{{ evento.id }}/">Excluir</a>
+                )
+            </li>
         {% endfor %}
     </ul>
 
